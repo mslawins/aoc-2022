@@ -9,7 +9,7 @@ pub fn day_4() {
     let task_one = task_one(&input);
     let task_two = task_two(&input);
 
-    println!("Day 3: task one: {}, task two: {}", task_one, task_two);
+    println!("Day 4: task one: {}, task two: {}", task_one, task_two);
 }
 
 fn task_one(input: &str) -> usize {
