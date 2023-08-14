@@ -15,7 +15,7 @@ impl SupplyStacks {
             .collect::<String>()
     }
 
-    pub fn apply_moves_by_one(&mut self, stack_moves: Vec<StackMove>) {
+    pub fn apply_moves_by_one(&mut self, stack_moves: &[StackMove]) {
         for stack_move in stack_moves {
             for _ in 0..stack_move.times {
                 self.apply_move(stack_move.from, stack_move.to);
@@ -23,10 +23,10 @@ impl SupplyStacks {
         }
     }
 
-    pub fn bulk_apply_moves(&mut self, stack_moves: Vec<StackMove>) {
-        for stack_move in stack_moves {
-            self.bulk_apply_move(stack_move);
-        }
+    pub fn bulk_apply_moves(&mut self, stack_moves: &[StackMove]) {
+        stack_moves
+            .iter()
+            .for_each(|stack_move| self.bulk_apply_move(stack_move))
     }
 
     fn apply_move(&mut self, from: usize, to: usize) {
@@ -34,7 +34,7 @@ impl SupplyStacks {
         self.stacks.get_mut(to - 1).unwrap().push(target);
     }
 
-    fn bulk_apply_move(&mut self, stack_move: StackMove) {
+    fn bulk_apply_move(&mut self, stack_move: &StackMove) {
         let from_vec = self.stacks.get_mut(stack_move.from - 1).unwrap();
         let tail = from_vec.split_off(from_vec.len() - stack_move.times);
         let to_vec = self.stacks.get_mut(stack_move.to - 1).unwrap();
@@ -49,35 +49,34 @@ impl FromStr for SupplyStacks {
         let mut lines: Vec<_> = s.split('\n').collect();
         let last = lines.pop().unwrap();
         let indexes = get_crates_indexes(last);
-
-        let mut stacks: Vec<Vec<char>> = vec![vec![]; indexes.len()];
-
-        for (index, value) in indexes.iter().enumerate() {
-            let inner_vec = stacks.get_mut(index).unwrap();
-
-            for line in lines.iter().rev() {
-                let char = line.chars().nth(*value).unwrap();
-
-                if char.is_ascii() && !char.is_whitespace() {
-                    inner_vec.push(char);
-                }
-            }
-        }
+        let stacks: Vec<Vec<char>> = indexes
+            .iter()
+            .map(|value| {
+                lines
+                    .iter()
+                    .rev()
+                    .filter_map(|line| {
+                        let char = line.chars().nth(*value).unwrap();
+                        if char.is_ascii() && !char.is_whitespace() {
+                            Some(char)
+                        } else {
+                            None
+                        }
+                    })
+                    .collect()
+            })
+            .collect();
 
         Ok(SupplyStacks { stacks })
     }
 }
 
 fn get_crates_indexes(last: &str) -> Vec<usize> {
-    let mut indexes: Vec<usize> = vec![];
-
-    for (index, char) in last.chars().enumerate() {
-        if char.is_ascii() && !char.is_whitespace() {
-            indexes.push(index);
-        }
-    }
-
-    indexes
+    last.chars()
+        .enumerate()
+        .filter(|(_, char)| char.is_ascii() && !char.is_whitespace())
+        .map(|(index, _)| index)
+        .collect()
 }
 
 #[test]

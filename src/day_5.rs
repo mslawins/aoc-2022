@@ -24,7 +24,7 @@ fn task_one(input: &str) -> String {
         .map(|l| StackMove::from_str(l).unwrap())
         .collect();
 
-    stacks.apply_moves_by_one(moves);
+    stacks.apply_moves_by_one(&moves);
     stacks.get_top_crates()
 }
 
@@ -39,7 +39,7 @@ fn task_two(input: &str) -> String {
         .map(|l| StackMove::from_str(l).unwrap())
         .collect();
 
-    stacks.bulk_apply_moves(moves);
+    stacks.bulk_apply_moves(&moves);
     stacks.get_top_crates()
 }
 
