@@ -34,8 +34,8 @@ fn task_two(input: &str) -> usize {
 
     chunks
         .into_iter()
-        .map(|chunk| get_intersection(chunk))
-        .map(|letter| get_points_from_letter(letter))
+        .map(get_intersection)
+        .map(get_points_from_letter)
         .sum::<usize>()
 }
 

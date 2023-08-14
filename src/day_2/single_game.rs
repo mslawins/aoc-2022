@@ -14,7 +14,7 @@ pub struct SingleGame {
 impl SingleGame {
     pub fn from_ruleset_one(s: &str) -> Result<Self, ParseErr> {
         let split: Vec<&str> = s.split_whitespace().collect();
-        let enemy = EnemyMove::from_str(split.get(0).unwrap())?;
+        let enemy = EnemyMove::from_str(split.first().unwrap())?;
         let player = PlayerMove::from_str(split.get(1).unwrap())?;
 
         Ok(SingleGame { enemy, player })
@@ -22,7 +22,7 @@ impl SingleGame {
 
     pub fn from_ruleset_two(s: &str) -> Result<Self, ParseErr> {
         let split: Vec<&str> = s.split_whitespace().collect();
-        let enemy = EnemyMove::from_str(split.get(0).unwrap())?;
+        let enemy = EnemyMove::from_str(split.first().unwrap())?;
         let result = GameResult::from_str(split.get(1).unwrap())?;
         let player = PlayerMove::new(enemy, result);
 

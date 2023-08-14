@@ -28,7 +28,7 @@ impl GameResult {
                 GameResult::Draw,
             ),
         ]);
-        *results.get(&(player.clone(), enemy.clone())).unwrap()
+        *results.get(&(*player, *enemy)).unwrap()
     }
 
     pub fn get_points(&self) -> i32 {

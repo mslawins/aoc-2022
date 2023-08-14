@@ -32,7 +32,7 @@ impl FromStr for AssignmentPair {
             .collect();
 
         Ok(AssignmentPair {
-            first_from: *parts.get(0).unwrap(),
+            first_from: *parts.first().unwrap(),
             first_to: *parts.get(1).unwrap(),
             second_from: *parts.get(2).unwrap(),
             second_to: *parts.get(3).unwrap(),

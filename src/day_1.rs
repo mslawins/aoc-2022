@@ -32,7 +32,7 @@ fn task_two(input: &str) -> u32 {
         .collect();
 
     total_loads.sort_unstable();
-    total_loads[total_loads.len() - 3..].into_iter().sum()
+    total_loads[total_loads.len() - 3..].iter().sum()
 }
 
 #[cfg(test)]

@@ -15,7 +15,7 @@ pub fn day_5() {
 
 fn task_one(input: &str) -> String {
     let parts = input.split("\n\n").collect::<Vec<_>>();
-    let mut stacks = SupplyStacks::from_str(parts.get(0).unwrap()).unwrap();
+    let mut stacks = SupplyStacks::from_str(parts.first().unwrap()).unwrap();
     let moves: Vec<StackMove> = parts
         .get(1)
         .unwrap()
@@ -30,7 +30,7 @@ fn task_one(input: &str) -> String {
 
 fn task_two(input: &str) -> String {
     let parts = input.split("\n\n").collect::<Vec<_>>();
-    let mut stacks = SupplyStacks::from_str(parts.get(0).unwrap()).unwrap();
+    let mut stacks = SupplyStacks::from_str(parts.first().unwrap()).unwrap();
     let moves: Vec<StackMove> = parts
         .get(1)
         .unwrap()
