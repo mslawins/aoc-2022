@@ -23,7 +23,7 @@ impl AssignmentPair {
 }
 
 impl FromStr for AssignmentPair {
-    type Err = String;
+    type Err = ();
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let parts: Vec<_> = s
